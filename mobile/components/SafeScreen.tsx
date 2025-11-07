@@ -1,16 +1,17 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import { StyleProp, View, ViewStyle } from 'react-native'
+import React,{ ReactNode } from 'react'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { ReactNode } from 'react';
+
 
 type SafeScreenProps = {
-    children: ReactNode;
+    children: ReactNode
+    style?: StyleProp<ViewStyle>
 };
 
-const SafeScreen = ({children} : SafeScreenProps) => {
+const SafeScreen = ({children, style } : SafeScreenProps) => {
     const insets = useSafeAreaInsets();
   return (
-    <View style={{ paddingTop:insets.top, flex:1 }}>
+    <View style={[{ paddingTop: insets.top, flex: 1 }, style]}>
       {children}
     </View>
   )

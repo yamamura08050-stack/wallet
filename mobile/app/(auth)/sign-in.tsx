@@ -1,9 +1,10 @@
 import { useSignIn } from '@clerk/clerk-expo'
-import { Image, StyleSheet } from 'react-native';
+import { Image } from 'react-native';
 import { Link, useRouter } from 'expo-router'
 import { Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { useSocialAuth } from "@/hooks/useSocialAuth"
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { styles } from "@/assets/styles/auth.styles.js"
 import React from 'react'
 
 export default function Page() {
@@ -91,7 +92,7 @@ export default function Page() {
 
         {/*Email signin*/}
         <View style={styles.inputContainer}>
-          <Text style={styles.inputLabel}>email</Text>
+          <Text style={styles.inputLabel}>Email</Text>
           <TextInput
             style={styles.input}
             autoCapitalize="none"
@@ -101,7 +102,7 @@ export default function Page() {
             onChangeText={(emailAddress) => setEmailAddress(emailAddress)}
             
           />
-          <Text style={styles.inputLabel}>password</Text>
+          <Text style={styles.inputLabel}>Password</Text>
           <TextInput
             value={password}
             placeholder="Enter your password"
@@ -110,8 +111,8 @@ export default function Page() {
             onChangeText={(password) => setPassword(password)}
             style={styles.input}
           />
-          <TouchableOpacity  onPress={onSignInPress} style={styles.signInButton}>
-            <Text style={styles.signInText}>Continue</Text>
+          <TouchableOpacity  style={{ backgroundColor: "white", marginTop: 40, paddingVertical: 10, borderRadius: 10}} onPress={onSignInPress}>
+            <Text style={styles.signInText}>Continue </Text>
           </TouchableOpacity>
         </View>
 
@@ -127,106 +128,4 @@ export default function Page() {
       </View>
     </KeyboardAwareScrollView>
   )
-}
-
-const styles = StyleSheet.create({
-  container: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    gap:10,
-    backgroundColor: "black"
-  },
-  header: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    gap: 10
-  },
-  title: {
-    color: "white",
-    fontWeight: "bold",
-    marginTop: 20,
-    fontSize: 30,
-  },
-  subtitle: {
-    color: "white",
-    fontSize: 17
-  },
-  oAuthContainer: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "center",
-    gap: 9,
-    marginTop: 23
-  },
-  socialAuthButton: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    borderWidth: 0.2,          // 枠の太さ
-    borderColor: "white",     // 枠の色（黒）
-    borderRadius: 10,   
-    paddingTop: 2,    // 0.75rem ≒ 12px
-    paddingBottom: 2, // 0.75rem ≒ 12px
-    paddingLeft: 32,   // 1.5rem ≒ 24px
-    paddingRight: 43,  // 1.5rem ≒ 24px｀
-  },
-  googleIcon: {
-    width: 34,     // size-10（カスタムスケール）
-    height: 34,    // size-10
-    marginRight: 4 // mr-3
-  },
-  appleIcon: {
-    width: 23,
-    height: 23,
-    marginRight: 10
-  },
-  socialAuthText: {
-    color: "white",
-    fontWeight: "bold",
-    fontSize: 17
-  },
-
-  inputContainer: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    width: 100,
-    gap: 15
-  },
-  inputLabel: {
-    color: "white",
-    fontWeight: "bold",
-    fontSize: 15
-  },
-  input: {
-    fontSize: 15,
-    width: 350,     
-    backgroundColor: "#323234",    
-    borderRadius: 6, 
-    paddingTop: 7,    // 0.75rem ≒ 12px
-    paddingBottom: 7, // 0.75rem ≒ 12px
-    paddingLeft: 15,   // 1.5rem ≒ 24p 
-    
-  },
-  signInButton: {
-    color: "white"
-  },
-  signInText: {
-    color: "white",
-  },
-  footer: {
-    display: "flex",
-    flexDirection: "row",
-    gap: 3,
-  },
-  footerText: {
-    color: "white",
-  },
-  footerLinkText: {
-    color: "white",
-    fontWeight: "bold"
-  }
-})
+};
