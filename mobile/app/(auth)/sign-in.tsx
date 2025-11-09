@@ -1,20 +1,22 @@
 import { useSignIn } from '@clerk/clerk-expo'
-import { Image } from 'react-native';
+import { ActivityIndicator, Image } from 'react-native';
 import { Link, useRouter } from 'expo-router'
 import { Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { useSocialAuth } from "@/hooks/useSocialAuth"
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { styles } from "@/assets/styles/auth.styles.js"
 import { Ionicons } from '@expo/vector-icons';
-import React from 'react'
+import React, { useState } from 'react'
 
 export default function Page() {
   
   const { signIn, setActive, isLoaded } = useSignIn()
   const {handleSocialAuth, isLoading} = useSocialAuth();
 
-  const [emailAddress, setEmailAddress] = React.useState('')
-  const [password, setPassword] = React.useState('')
+  const [emailAddress, setEmailAddress] = useState('')
+  const [password, setPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false);
+  
 
   const router = useRouter()
 
@@ -64,23 +66,60 @@ export default function Page() {
         <View style={styles.oAuthContainer}>
 
           {/*Google Button*/}
-          <TouchableOpacity style={styles.socialAuthButton}>
-            <Image style={styles.googleIcon}
-                    source={require("../../assets/images/google.png")}
-                    resizeMode="contain"
-                  />
-            <Text style={styles.socialAuthText}>Google</Text>
+          <TouchableOpacity 
+            onPress={() => handleSocialAuth("oauth_google")}
+            disabled={isLoading}
+            style={[
+                styles.socialAuthButton, 
+                {
+                  shadowColor: "#000",
+                  shadowOffset: { width: 0, height: 1 },
+                  shadowOpacity: 0.1,
+                  shadowRadius: 2,
+                  elevation: 2,
+                },
+              ]}
+            >
+            {isLoading ? (
+              <ActivityIndicator size="small" color="white" />
+            ) : (
+              <>
+                <Image style={styles.googleIcon}
+                      source={require("../../assets/images/google.png")}
+                      resizeMode="contain"
+                    />
+                <Text style={styles.socialAuthText}>Google</Text>
+              </>
+            )}
           </TouchableOpacity>
 
           {/*Apple Button*/}
-          <TouchableOpacity style={styles.socialAuthButton}>
-            <Image style={styles.appleIcon}
+          <TouchableOpacity 
+            onPress={() => handleSocialAuth("oauth_apple")}
+            disabled={isLoading}
+            style={[
+                styles.socialAuthButton, 
+                {
+                  shadowColor: "#000",
+                  shadowOffset: { width: 0, height: 1 },
+                  shadowOpacity: 0.1,
+                  shadowRadius: 2,
+                  elevation: 2,
+                },
+              ]}
+            >
+            {isLoading ? (
+              <ActivityIndicator size="small" color="white" />
+            ) : (
+              <>
+                <Image style={styles.appleIcon}
                     source={require("../../assets/images/apple.png")}
                     resizeMode="contain"
                   />
-            <Text style={styles.socialAuthText}>Apple</Text>
+                <Text style={styles.socialAuthText}>Apple</Text>
+              </>
+            )}
           </TouchableOpacity>
-
         </View>
 
         <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 16 }}>
@@ -129,13 +168,21 @@ export default function Page() {
               onChangeText={(password) => setPassword(password)}
               style={styles.input}
             />
-            <TouchableOpacity>
-              <Ionicons name="eye-off-outline" size={20} color="white" style={{marginLeft:125}}/>
+            <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+              {showPassword ? (
+                <Ionicons name="eye-outline" size={20} color="white"/>
+              ) : (
+                <Ionicons name="eye-off-outline" size={20} color="white" />
+              )};   
             </TouchableOpacity>
           </View>
 
           <TouchableOpacity  style={{ backgroundColor: "white", marginTop: 40, paddingVertical: 10, borderRadius: 10}} onPress={onSignInPress}>
-            <Text style={styles.signInText}>Continue </Text>
+            {isLoading ? (
+              <ActivityIndicator size='small' color="white" />
+            ) : (
+              <Text style={styles.signInText}>Continue </Text>
+            )}
           </TouchableOpacity>
         </View>
 

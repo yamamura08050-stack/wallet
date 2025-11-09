@@ -43,9 +43,9 @@ export const styles = StyleSheet.create({
     borderWidth: 0.2,          // 枠の太さ
     borderColor: "white",     // 枠の色（黒）
     borderRadius: 10,   
-    paddingVertical: 4, // 0.75rem ≒ 12px
     paddingLeft: 34,   // 1.5rem ≒ 24px
-    paddingRight: 45,  // 1.5rem ≒ 24px｀
+    paddingRight: 45,
+    height: 41 // 1.5rem ≒ 24px｀
   },
   googleIcon: {
     width: 34,     // size-10（カスタムスケール）
@@ -84,12 +84,16 @@ export const styles = StyleSheet.create({
     borderRadius: 8, 
     paddingTop: 7,    // 0.75rem ≒ 12px
     paddingBottom: 7, // 0.75rem ≒ 12px
-    paddingLeft: 15,   // 1.5rem ≒ 24p 
+    paddingLeft: 15, 
+    color: "white",  
+    flex: 1,
     
   },
-  signInBtn: {
-    marginTop: 50,
-    color: "white",
+  signBtn: {
+    backgroundColor: "white",
+    marginTop: 40, 
+    paddingVertical: 10, 
+    borderRadius: 10
   },
   signInText: {
     color: "black",

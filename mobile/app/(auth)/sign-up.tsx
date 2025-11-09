@@ -1,19 +1,24 @@
 import * as React from 'react'
-import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { useSignUp } from '@clerk/clerk-expo'
 import { Link, useRouter } from 'expo-router'
 import { styles } from "@/assets/styles/auth.styles";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Ionicons } from '@expo/vector-icons';
+import { useState } from 'react'
+import { useSocialAuth } from '@/hooks/useSocialAuth';
 
 export default function SignUpScreen() {
   const { isLoaded, signUp, setActive } = useSignUp()
   const router = useRouter()
 
-  const [emailAddress, setEmailAddress] = React.useState('')
-  const [password, setPassword] = React.useState('')
-  const [pendingVerification, setPendingVerification] = React.useState(false)
-  const [code, setCode] = React.useState('')
+  const [emailAddress, setEmailAddress] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
+  const [pendingVerification, setPendingVerification] = useState(false)
+  const [code, setCode] = useState('')
+  const {handleSocialAuth, isLoading} = useSocialAuth();
 
   // Handle submission of sign-up form
   const onSignUpPress = async () => {
@@ -68,17 +73,17 @@ export default function SignUpScreen() {
 
   if (pendingVerification) {
     return (
-      <>
-        <Text>Verify your email</Text>
-        <TextInput
+      <View style={{ backgroundColor: "black", height:"100%" ,display: "flex", flexDirection: "column", justifyContent:"center" ,gap: 35, paddingBottom: 120 }}>
+        <Text style={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize:30 }}>Verify your email</Text>
+        <TextInput style={{ color: "white" ,fontSize: 18,backgroundColor: "#323234", borderRadius: 8, paddingVertical: 10, paddingLeft:10, marginHorizontal:"45" }}
           value={code}
           placeholder="Enter your verification code"
           onChangeText={(code) => setCode(code)}
         />
-        <TouchableOpacity onPress={onVerifyPress}>
-          <Text>Verify</Text>
+        <TouchableOpacity onPress={onVerifyPress}  style={{ backgroundColor: "white",borderRadius: 8, paddingVertical: 6, marginHorizontal:"80" }}>
+          <Text style={{ color: "black", textAlign:"center", fontSize: 20 }}>Verify</Text>
         </TouchableOpacity>
-      </>
+      </View>
     )
   }
 
@@ -99,23 +104,60 @@ export default function SignUpScreen() {
             <View style={styles.oAuthContainer}>
     
               {/*Google Button*/}
-              <TouchableOpacity style={styles.socialAuthButton}>
-                <Image style={styles.googleIcon}
-                        source={require("../../assets/images/google.png")}
-                        resizeMode="contain"
-                      />
-                <Text style={styles.socialAuthText}>Google</Text>
+              <TouchableOpacity 
+              onPress={() => handleSocialAuth("oauth_google")}
+              disabled={isLoading}
+              style={[
+                  styles.socialAuthButton, 
+                  {
+                    shadowColor: "#000",
+                    shadowOffset: { width: 0, height: 1 },
+                    shadowOpacity: 0.1,
+                    shadowRadius: 2,
+                    elevation: 2,
+                  },
+                ]}
+              >
+                {isLoading ? (
+                  <ActivityIndicator size='small' color="white" />
+                ) : (
+                  <>
+                    <Image style={styles.googleIcon}
+                          source={require("../../assets/images/google.png")}
+                          resizeMode="contain"
+                        />
+                    <Text style={styles.socialAuthText}>Google</Text>
+                  </>
+                )}
               </TouchableOpacity>
     
               {/*Apple Button*/}
-              <TouchableOpacity style={styles.socialAuthButton}>
-                <Image style={styles.appleIcon}
+              <TouchableOpacity 
+              onPress={() => handleSocialAuth("oauth_apple")}
+              disabled={isLoading}
+              style={[
+                  styles.socialAuthButton, 
+                  {
+                    shadowColor: "#000",
+                    shadowOffset: { width: 0, height: 1 },
+                    shadowOpacity: 0.1,
+                    shadowRadius: 2,
+                    elevation: 2,
+                  },
+                ]}
+              >
+              {isLoading ? (
+                <ActivityIndicator size='small' color="white" />
+              ) : (
+                <>
+                  <Image style={styles.appleIcon}
                         source={require("../../assets/images/apple.png")}
                         resizeMode="contain"
                       />
                 <Text style={styles.socialAuthText}>Apple</Text>
+                </>
+              )}
               </TouchableOpacity>
-    
             </View>
     
             <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 16 }}>
@@ -147,6 +189,8 @@ export default function SignUpScreen() {
                   
                 />
               </View>
+
+              {/*Password*/}
               <Text style={styles.inputLabel}>Password</Text>
               <View style={{flexDirection: "row",
                         alignItems: "center",
@@ -164,8 +208,12 @@ export default function SignUpScreen() {
                   onChangeText={(password) => setPassword(password)}
                   style={styles.input}
                 />
-                <TouchableOpacity>
-                  <Ionicons name="eye-off-outline" size={20} color="white" style={{marginLeft:125}}/>
+                <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+                  {showPassword ? (
+                    <Ionicons name="eye-outline" size={20} color="white" />
+                  ) : (
+                    <Ionicons name="eye-off-outline" size={20} color="white" />
+                  )}
                 </TouchableOpacity>
                 </View>
                 
@@ -183,16 +231,24 @@ export default function SignUpScreen() {
                   placeholder="Re-enter your password"
                   placeholderTextColor="white"
                   secureTextEntry={true}
-                  onChangeText={(password) => setPassword(password)}
+                  onChangeText={(confirmPassword) => setConfirmPassword(confirmPassword)}
                   style={styles.input}
                 />
-                <TouchableOpacity>
-                  <Ionicons name="eye-off-outline" size={20} color="white" style={{marginLeft:100}}/>
+                <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+                  {showPassword ? (
+                    <Ionicons name="eye-outline" size={20} color="white" />
+                  ) : (
+                     <Ionicons name="eye-off-outline" size={20} color="white" />
+                  )}
                 </TouchableOpacity>
               </View>
 
-              <TouchableOpacity  style={{ backgroundColor: "white", marginTop: 40, paddingVertical: 10, borderRadius: 10}} onPress={onSignUpPress}>
-                <Text style={styles.signInText}>Sign up </Text>
+              <TouchableOpacity  style={styles.signBtn} onPress={onSignUpPress}>
+                {isLoading ? (
+                    <ActivityIndicator size='small' color="white" />
+                ) : (
+                    <Text style={styles.signInText}>Sign up </Text>
+                )}
               </TouchableOpacity>
             </View>
     
