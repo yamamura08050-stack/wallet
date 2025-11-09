@@ -1,25 +1,38 @@
 import { SignedIn, SignedOut, useUser } from '@clerk/clerk-expo'
 import { Link } from 'expo-router'
-import { Text, View } from 'react-native'
+import { Text, View, StyleSheet, FlatList, TouchableOpacity} from 'react-native'
 import { SignOutButton } from '../../components/SignOutButton'
+import { styles } from '@/assets/styles/home.styles.js'
+import SummaryCard from '@/components/SummaryCard'
 
 export default function Page() {
-  const { user } = useUser()
 
   return (
-    <View>
-      <SignedIn>
-        <Text>Hello {user?.emailAddresses[0].emailAddress}</Text>
-        <SignOutButton />
-      </SignedIn>
-      <SignedOut>
-        <Link href="/(auth)/sign-in">
-          <Text>Sign in</Text>
-        </Link>
-        <Link href="/(auth)/sign-up">
-          <Text>Sign up</Text>
-        </Link>
-      </SignedOut>
+    <View style={styles.container}>
+
+        {/*HEADER*/}
+        <View style={styles.header}>
+          <Text style={styles.headerText}>Home</Text>
+          <SignOutButton />
+        </View>
+
+        {/*Summary*/}
+        <SummaryCard/>
+
+        <View style={styles.chartCard}>
+
+        </View>
+
+        <Text style={styles.transactionText}>Recent Transactions</Text>
+
+
+        <View style={styles.transactionContainer}>
+          
+        </View>
+
+
+
     </View>
   )
-}
+};
+
