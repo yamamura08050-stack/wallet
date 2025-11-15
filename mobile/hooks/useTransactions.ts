@@ -48,16 +48,6 @@ export const useTransactions = (userId? : string) => {
     }, [userId])
 
     
-    // const fetchSummary = useCallback(async () => {
-    //     try {
-    //         const response = await fetch(`${API_URL}/transactions/balance/${userId}`);
-    //         const data = await response.json();
-    //         setBalance(data);
-    //     } catch (error) {
-    //         console.error("Error fetching balance:", error)
-    //     }
-    // }, [userId]);
-
 
     const fetchBalance = useCallback(async({ startDate, endDate, userId }: FetchBalanceParams) => {
         try {
