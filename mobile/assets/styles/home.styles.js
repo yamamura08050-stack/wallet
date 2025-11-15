@@ -27,7 +27,7 @@ export const styles = StyleSheet.create({
   balanceCard: {
     flex: 0.9,
     borderRadius: 10,
-    backgroundColor: "#1a1a1a"
+    backgroundColor: "#101010ff"
   },
   balanceText: {
     color: "#e3e0e0ff",
@@ -56,7 +56,7 @@ export const styles = StyleSheet.create({
   },
   incomeCard: {
     flex: 1,
-    backgroundColor: "#1a1a1a",
+    backgroundColor: "#101010ff",
     borderRadius: 10
   },
   incomeText: {
@@ -72,7 +72,7 @@ export const styles = StyleSheet.create({
     marginLeft: 10
   },
   expensesCard: {
-    backgroundColor: "#1a1a1a",
+    backgroundColor: "#101010ff",
     borderRadius: 10,
     flex: 1
   },
@@ -92,7 +92,7 @@ export const styles = StyleSheet.create({
     marginVertical: 10,
     marginHorizontal: 18,
     flex: 0.8,
-    backgroundColor: "#1a1a1a",
+    backgroundColor: "#101010ff",
     borderRadius: 10
 
   },
@@ -105,9 +105,24 @@ export const styles = StyleSheet.create({
   },
   transactionContainer: {
     marginHorizontal: 18,
-    flex:2,
-    backgroundColor: "#1a1a1a",
+    flex:1.4,
+    backgroundColor: "#101010ff",
     borderRadius: 10
+  },
+  createBtn: {
+    display: "flex",
+    borderRadius:20, 
+    flex:0.25,
+    marginBottom: 70, 
+    marginHorizontal: 18 , 
+    backgroundColor: "#2e2d2d", 
+    justifyContent: "center", 
+    alignItems: "center"
+  },
+  createBtnText: {
+    color: "white", 
+    fontWeight: "bold", 
+    fontSize: 25
   }
 
 

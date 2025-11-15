@@ -55,6 +55,7 @@ export default function Page() {
       contentContainerStyle={{ flexGrow: 1 }}
       enableOnAndroid={true}
       enableAutomaticScroll={true}>
+        
       <View style={styles.container}>
 
         {/*Header*/}
@@ -164,7 +165,7 @@ export default function Page() {
               value={password}
               placeholder="Enter your password"
               placeholderTextColor="white"
-              secureTextEntry={true}
+              secureTextEntry={!showPassword}
               onChangeText={(password) => setPassword(password)}
               style={styles.input}
             />
@@ -177,7 +178,10 @@ export default function Page() {
             </TouchableOpacity>
           </View>
 
-          <TouchableOpacity  style={{ backgroundColor: "white", marginTop: 40, paddingVertical: 10, borderRadius: 10}} onPress={onSignInPress}>
+          <TouchableOpacity  
+            style={{ backgroundColor: "white", marginTop: 40, paddingVertical: 10, borderRadius: 10}} 
+            onPress={onSignInPress}
+          >
             {isLoading ? (
               <ActivityIndicator size='small' color="white" />
             ) : (
@@ -190,9 +194,7 @@ export default function Page() {
         <View style={styles.footer}>
           <Text style={styles.footerText}>Don&apos;t have an account?</Text>
           <Link href="/sign-up" asChild>
-            <TouchableOpacity>
               <Text style={styles.footerLinkText}>Sign up</Text>
-            </TouchableOpacity>
           </Link>
         </View>
       </View>

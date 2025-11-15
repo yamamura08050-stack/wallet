@@ -26,10 +26,9 @@ export async function initDB() {
             amount DECIMAL(10, 2) NOT NULL,
             payment_method_id INT REFERENCES payment_methods(id),
             location VARCHAR(255),
-            category_id INT,
+            category_id INT REFERENCES categories(id),
             created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-        )`
-        ;
+        )`;
         
         console.log("DB initialized successfuly")
     } catch (error) {
