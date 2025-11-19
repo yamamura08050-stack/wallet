@@ -4,10 +4,10 @@ import { styles } from '@/assets/styles/home.styles.js'
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { useTransactions } from '@/hooks/useTransactions';
 import { useUser } from "@clerk/clerk-expo";
+import { useDateRangeStore } from '@/hooks/useDateRangeStore';
 
 const SummaryCard = () => {
-    const [startDate, setStartDate] = useState<Date | null>(null);
-    const [endDate, setEndDate] = useState<Date | null>(null);
+    const { startDate, endDate, setStartDate, setEndDate } = useDateRangeStore();
     const [PickerVisible, setPickerVisible] = useState(false);
     const [selectingStart, setSelectingStart] = useState(true);
     const {user, isLoaded} = useUser();
