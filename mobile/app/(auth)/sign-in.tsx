@@ -7,6 +7,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { styles } from "@/assets/styles/auth.styles.js"
 import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react'
+import { publishToken } from "../../hooks/usePublishToken"
 
 export default function Page() {
   
@@ -35,12 +36,15 @@ export default function Page() {
       // and redirect the user
       if (signInAttempt.status === 'complete') {
         await setActive({ session: signInAttempt.createdSessionId })
+        await publishToken(signInAttempt.createdSessionId);
         router.replace('/')
       } else {
         // If the status isn't complete, check why. User might need to
         // complete further steps.
         console.error(JSON.stringify(signInAttempt, null, 2))
       }
+
+      
     } catch (err) {
       // See https://clerk.com/docs/custom-flows/error-handling
       // for more info on error handling
